@@ -56,7 +56,7 @@ Los ejemplos, retos, frases y ejercicios de cada aplicación están en su carpet
   Se edita como JSON: comillas dobles y sin comas finales.
 - **Por qué no son `.json`.** Los navegadores no dejan leer ficheros `.json` cuando la página se abre desde el disco; así, las aplicaciones funcionan igual en local que en un servidor.
 - **Comprobación.** Las pruebas leen estos ficheros y comprueban que su contenido es JSON válido.
-- **Ejercicios de deducción natural.** Se generan a partir del libro con `node herramientas/ejercicios.js`; si cambian en el libro, conviene volver a generarlos en vez de editarlos a mano.
+- **Ejercicios de deducción natural.** Se generan a partir del libro con `node herramientas/ejercicios.js`; si cambian en el libro, conviene volver a generarlos mejor que editarlos a mano.
 
 ## Créditos
 
