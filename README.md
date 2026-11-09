@@ -2,6 +2,9 @@
 
 Este repositorio reúne aplicaciones de apoyo a los *Apuntes de Lógica* (2.º del Grado en Filosofía, Universidad de Sevilla). No forman parte del manual: son material complementario.
 
+- **Usarlas:** https://fersoler.github.io/AplicacionesLogica/
+- **El libro:** [fersoler/ApuntesLogica](https://github.com/fersoler/ApuntesLogica), con licencia CC BY-SA 4.0.
+
 | Aplicación | Tema | Contenido |
 |---|---|---|
 | [`sintaxis/`](sintaxis/README.md) | 1 y 4 | Sintaxis: conectiva principal, subfórmulas, precedencia, alcance, variables libres y ligadas, sustitución |
