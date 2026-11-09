@@ -1,0 +1,138 @@
+<!doctype html>
+<!-- SPDX-License-Identifier: GPL-3.0-or-later. Copyright (C) 2026 Fernando Soler Toscano -->
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Tablas de verdad</title>
+  <meta name="description" content="Semántica de la lógica proposicional: tablas de verdad para rellenar, clasificación de fórmulas, equivalencia, consecuencia lógica, asignación directa y formalización.">
+  <link rel="stylesheet" href="../comun/css/base.css">
+  <link rel="stylesheet" href="css/tablas.css">
+</head>
+<body>
+  <header>
+    <div class="volver"><a href="../index.html">← Aplicaciones de lógica</a></div>
+    <h1>Tablas de verdad</h1>
+    <p class="subtitulo">Semántica de la lógica proposicional (tema 2): interpretaciones, tablas de verdad, equivalencia y consecuencia lógica.</p>
+  </header>
+
+  <main>
+    <section class="bloque">
+      <div class="pestanas" role="tablist">
+        <button type="button" role="tab" data-panel="tabla">Tabla de verdad</button>
+        <button type="button" role="tab" data-panel="consecuencia">Consecuencia lógica</button>
+        <button type="button" role="tab" data-panel="evaluar">Una interpretación</button>
+        <button type="button" role="tab" data-panel="formalizar">Formalizar</button>
+      </div>
+
+      <!-- Tabla de verdad de una o varias fórmulas -->
+      <div id="panel-tabla" class="panel">
+        <p class="explica">Escribe una fórmula o varias, una por línea, y rellena su tabla de verdad (§2.3). Cada pulsación en una casilla cambia su valor entre 1 y 0; los botones de debajo de cada columna la llenan entera. Con el teclado: 1 y 0 escriben y bajan a la fila siguiente, y las flechas mueven. Al pasar por una casilla se marcan las columnas de las que depende.</p>
+        <label class="rotulo" for="formulas-tabla">Fórmulas (una por línea)</label>
+        <div class="simbolos-botones" data-destino="formulas-tabla"></div>
+        <div class="fila-entrada">
+          <textarea id="formulas-tabla" rows="2" spellcheck="false"></textarea>
+          <select id="ejemplos-tabla" aria-label="Ejemplos"><option value="">Ejemplos…</option></select>
+        </div>
+        <div class="opciones-tabla" data-prefijo="t"></div>
+        <button type="button" id="b-construir-tabla">Construir la tabla</button>
+        <div id="error-tabla" class="error" role="alert"></div>
+        <div id="zona-tabla"></div>
+        <div id="analisis-tabla"></div>
+      </div>
+
+      <!-- Consecuencia lógica -->
+      <div id="panel-consecuencia" class="panel" hidden>
+        <p class="explica">Γ ⊨ A si ninguna interpretación hace verdaderas todas las premisas y falsa la conclusión (§2.6). Rellena la tabla conjunta, marca los contraejemplos pulsando el número de su fila y di si el argumento es válido. También puedes ver cómo se resuelve con el método de asignación directa (§2.6.1).</p>
+        <div class="fila-entrada">
+          <select id="ejemplos-consecuencia" aria-label="Ejemplos"><option value="">Ejemplos…</option></select>
+        </div>
+        <label class="rotulo" for="premisas">Premisas (una por línea; pueden faltar)</label>
+        <div class="simbolos-botones" data-destino="premisas"></div>
+        <textarea id="premisas" rows="3" spellcheck="false"></textarea>
+        <label class="rotulo" for="conclusion">Conclusión</label>
+        <div class="simbolos-botones" data-destino="conclusion"></div>
+        <input id="conclusion" type="text" spellcheck="false" autocomplete="off">
+        <div class="opciones-tabla" data-prefijo="c"></div>
+        <button type="button" id="b-construir-consecuencia">Construir la tabla</button>
+        <div id="error-consecuencia" class="error" role="alert"></div>
+        <p id="argumento" class="formula-grande"></p>
+        <div id="zona-consecuencia"></div>
+        <div id="pregunta-consecuencia"></div>
+        <div id="relacionadas"></div>
+        <button type="button" id="b-asignacion" class="secundario">Resolverlo por asignación directa (§2.6.1)</button>
+        <div class="detalle" id="bloque-asignacion" hidden>
+          <h3>Método de asignación directa (§2.6.1)</h3>
+          <p class="explica">Intentamos construir un contraejemplo: forzamos la conclusión como falsa y las premisas como verdaderas, y vemos qué valores quedan obligados. Si una condición admite varias posibilidades, examinamos cada caso por separado. El argumento es válido si todos los casos llevan a contradicción.</p>
+          <ol id="pasos-asignacion" class="pasos-asignacion"></ol>
+          <div class="botones">
+            <button type="button" id="b-paso" class="secundario">Siguiente paso</button>
+            <button type="button" id="b-todos-pasos" class="secundario">Ver todos los pasos</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Una interpretación: evaluación paso a paso -->
+      <div id="panel-evaluar" class="panel" hidden>
+        <p class="explica">Una interpretación v da a cada variable el valor 1 o 0 (§2.2). Elige los valores y calcula el de la fórmula de dentro afuera, como en el ejemplo de §2.2: en cada paso, decide si la subfórmula vale 1 o 0.</p>
+        <label class="rotulo" for="formula-evaluar">Fórmula</label>
+        <div class="simbolos-botones" data-destino="formula-evaluar"></div>
+        <div class="fila-entrada">
+          <input id="formula-evaluar" type="text" spellcheck="false" autocomplete="off">
+          <select id="ejemplos-evaluar" aria-label="Ejemplos"><option value="">Ejemplos…</option></select>
+        </div>
+        <div id="error-evaluar" class="error" role="alert"></div>
+        <div id="interpretacion" class="interpretacion"></div>
+        <ol id="pasos-evaluar" class="pasos-evaluar"></ol>
+        <div id="final-evaluar"></div>
+        <div class="botones-fila">
+          <button type="button" id="b-todos-evaluar" class="secundario">Ver todos los pasos</button>
+          <button type="button" id="b-repetir-evaluar" class="secundario">Empezar de nuevo</button>
+        </div>
+      </div>
+
+      <!-- Formalización -->
+      <div id="panel-formalizar" class="panel" hidden>
+        <p class="explica">Formaliza la frase con las letras del diccionario (§2.5). La aplicación compara tu fórmula con una formalización correcta en todas las interpretaciones: si no son equivalentes, te enseña un caso en que difieren.</p>
+        <div class="fila-entrada">
+          <button type="button" id="b-anterior" class="secundario" aria-label="Frase anterior">◀</button>
+          <select id="frases" aria-label="Frase"></select>
+          <button type="button" id="b-siguiente" class="secundario" aria-label="Frase siguiente">▶</button>
+        </div>
+        <p id="frase" class="frase"></p>
+        <div id="diccionario-frase" class="diccionario-frase"></div>
+        <div class="simbolos-botones" data-destino="formalizacion"></div>
+        <div class="fila-entrada">
+          <input id="formalizacion" type="text" spellcheck="false" autocomplete="off" aria-label="Tu formalización">
+          <button type="button" id="b-comprobar">Comprobar</button>
+        </div>
+        <div id="resultado-formalizacion"></div>
+        <button type="button" id="b-solucion" class="secundario">Ver una solución</button>
+        <p id="solucion" class="formula-grande" hidden></p>
+      </div>
+    </section>
+
+    <section class="bloque">
+      <details class="ayuda">
+        <summary>Cómo escribir las fórmulas y tablas de las conectivas</summary>
+        <div data-ayuda-sintaxis="prop bot"></div>
+        <p class="explica">Las filas siguen el orden del libro: la primera variable es la que cambia más despacio y cada una toma primero el valor 1.</p>
+        <p class="explica">Tablas características de las conectivas (§2.2.1):</p>
+        <div id="tablas-conectivas" class="tablas-conectivas"></div>
+      </details>
+    </section>
+  </main>
+
+  <footer>
+    Material complementario de los <i>Apuntes de Lógica</i> (Grado en Filosofía, Universidad de Sevilla). Fernando Soler Toscano.
+  </footer>
+
+  <script src="../comun/js/datos.js"></script>
+  <script src="../comun/js/ayuda.js"></script>
+  <script src="datos/ejercicios.js"></script>
+  <script src="../comun/js/formulas.js"></script>
+  <script src="js/semantica.js"></script>
+  <script src="js/ejercicios.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

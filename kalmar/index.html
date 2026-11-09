@@ -1,0 +1,93 @@
+<!doctype html>
+<!-- SPDX-License-Identifier: GPL-3.0-or-later. Copyright (C) 2026 Fernando Soler Toscano -->
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>La prueba de Kalmár</title>
+  <meta name="description" content="Animación de la prueba de completud de Kalmár: tabla de verdad, derivación de cada fila y colapso de premisas con LEM.">
+  <link rel="stylesheet" href="../comun/css/base.css">
+  <link rel="stylesheet" href="css/kalmar.css">
+</head>
+<body>
+  <header>
+    <div class="volver"><a href="../index.html">← Aplicaciones de lógica</a></div>
+    <h1>La prueba de Kalmár, paso a paso</h1>
+    <p class="subtitulo">Completud de la lógica proposicional (tema 3): de la tabla de verdad a la derivación.</p>
+  </header>
+
+  <main>
+    <section id="entrada" class="bloque">
+      <form id="formulario" autocomplete="off">
+        <label for="formula">Fórmula (hasta 3 variables y 6 conectivas)</label>
+        <div class="simbolos-botones" data-destino="formula"></div>
+        <div class="fila-entrada">
+          <input id="formula" type="text" spellcheck="false" value="(p → q) ∨ (q → p)">
+          <button type="submit">Construir</button>
+        </div>
+        <div id="error" class="error" role="alert"></div>
+      </form>
+      <div class="ejemplos" id="ejemplos" aria-label="Ejemplos"></div>
+    </section>
+
+    <div id="resultado" hidden>
+      <section class="bloque" id="resumen"></section>
+
+      <section class="bloque" id="sec-tabla">
+        <h2>1. La tabla de verdad</h2>
+        <p class="explica">Cada interpretación <i>v</i> da una fila. A la derecha están las fórmulas relativas a la fila: <i>X</i><sup>v</sup> es <i>X</i> si <i>v</i> la hace verdadera y ¬<i>X</i> si la hace falsa. El lema de Kalmár asegura que, en cada fila, de los literales de las variables se deriva <i>A</i><sup>v</sup>. Pulsa una fila para ver su derivación.</p>
+        <div class="desplazable"><table id="tabla" class="tabla-verdad"></table></div>
+        <button class="continuar" data-destino="sec-filas">Ver las derivaciones de las filas</button>
+      </section>
+
+      <section class="bloque" id="sec-filas" hidden>
+        <h2>2. La derivación de cada fila</h2>
+        <p class="explica">La derivación se construye por inducción sobre la fórmula, como en la demostración del lema: primero las subfórmulas y después, según la conectiva principal y los valores de verdad, el caso que corresponda.</p>
+        <div id="pestanas" class="pestanas" role="tablist"></div>
+        <div id="cabecera-fila" class="cabecera-derivacion"></div>
+        <label class="casilla"><input type="checkbox" id="ver-notas" checked> Mostrar el caso del lema en cada paso</label>
+        <div id="derivacion-fila" class="desplazable"></div>
+        <button class="continuar" data-destino="sec-colapso">Ver el colapso de premisas</button>
+      </section>
+
+      <section class="bloque" id="sec-colapso" hidden>
+        <h2>3. El colapso de premisas</h2>
+        <p class="explica" id="explica-colapso"></p>
+        <div class="controles" role="group" aria-label="Controles del colapso">
+          <button id="b-inicio" title="Al principio" aria-label="Al principio">⏮</button>
+          <button id="b-atras" title="Paso anterior" aria-label="Paso anterior">◀ Anterior</button>
+          <button id="b-play" title="Reproducir" aria-label="Reproducir">▶ Reproducir</button>
+          <button id="b-adelante" title="Paso siguiente" aria-label="Paso siguiente">Siguiente ▶</button>
+          <button id="b-final" title="Al final" aria-label="Al final">⏭</button>
+          <span id="contador" class="contador"></span>
+        </div>
+        <div id="mensaje-paso" class="mensaje-paso" aria-live="polite"></div>
+        <div class="desplazable">
+          <div id="arbol" class="arbol"></div>
+        </div>
+        <div id="detalle" class="detalle"></div>
+      </section>
+    </div>
+
+    <section class="bloque">
+      <details class="ayuda">
+        <summary>Cómo escribir las fórmulas</summary>
+        <div data-ayuda-sintaxis="prop bot"></div>
+      </details>
+    </section>
+  </main>
+
+  <footer>
+    Material complementario de los <i>Apuntes de Lógica</i> (Grado en Filosofía, Universidad de Sevilla). Fernando Soler Toscano.
+  </footer>
+
+  <script src="../comun/js/datos.js"></script>
+  <script src="../comun/js/ayuda.js"></script>
+  <script src="datos/ejemplos.js"></script>
+  <script src="../comun/js/formulas.js"></script>
+  <script src="../comun/js/verificador.js"></script>
+  <script src="../comun/js/fitch.js"></script>
+  <script src="js/kalmar.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

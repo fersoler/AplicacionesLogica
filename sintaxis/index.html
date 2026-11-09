@@ -1,0 +1,77 @@
+<!doctype html>
+<!-- SPDX-License-Identifier: GPL-3.0-or-later. Copyright (C) 2026 Fernando Soler Toscano -->
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Sintaxis de las fórmulas</title>
+  <meta name="description" content="Conectiva principal, subfórmulas, paréntesis y precedencia; alcance de los cuantificadores, variables libres y ligadas, y sustitución. Para explorar y practicar.">
+  <link rel="stylesheet" href="../comun/css/base.css">
+  <link rel="stylesheet" href="css/sintaxis.css">
+</head>
+<body>
+  <header>
+    <div class="volver"><a href="../index.html">← Aplicaciones de lógica</a></div>
+    <h1>Sintaxis de las fórmulas</h1>
+    <p class="subtitulo">Lógica proposicional (tema 1): conectiva principal, subfórmulas y precedencia. Primer orden (tema 4): alcance, variables libres y ligadas, y sustitución.</p>
+  </header>
+
+  <main>
+    <section class="bloque">
+      <div class="pestanas" role="tablist">
+        <button type="button" role="tab" data-panel="explorar">Explorar una fórmula</button>
+        <button type="button" role="tab" data-panel="practicar">Practicar</button>
+      </div>
+
+      <div id="panel-explorar" class="panel">
+        <p class="explica">Escribe una fórmula, proposicional o de primer orden, y mira cómo está construida: su conectiva principal, sus subfórmulas y su árbol de formación (§1.1.1). En primer orden, también el alcance de cada cuantificador y qué apariciones de las variables son libres o ligadas (§4.2).</p>
+        <div class="simbolos-botones" data-destino="formula"></div>
+        <div class="fila-entrada">
+          <input id="formula" type="text" spellcheck="false" autocomplete="off" aria-label="Fórmula">
+          <select id="ejemplos" aria-label="Ejemplos"><option value="">Ejemplos…</option></select>
+        </div>
+        <div id="error" class="error" role="alert"></div>
+        <div id="analisis"></div>
+      </div>
+
+      <div id="panel-practicar" class="panel" hidden>
+        <div class="fila-entrada">
+          <select id="tipo" aria-label="Tipo de ejercicio">
+            <option value="principal">Conectiva principal</option>
+            <option value="agrupacion">¿Cómo se agrupa?</option>
+            <option value="subformulas">Subfórmulas</option>
+            <option value="libres">Variables libres y ligadas</option>
+            <option value="sustitucion">Sustitución</option>
+          </select>
+          <select id="nivel" aria-label="Lenguaje">
+            <option value="prop">Lógica proposicional (tema 1)</option>
+            <option value="primer">Primer orden (tema 4)</option>
+          </select>
+          <button type="button" id="b-otro">Otro ejercicio</button>
+          <span id="marcador" class="explica"></span>
+        </div>
+        <div id="ejercicio"></div>
+      </div>
+    </section>
+
+    <section class="bloque">
+      <details class="ayuda">
+        <summary>Cómo escribir las fórmulas</summary>
+        <div data-ayuda-sintaxis="prop bot cuant igualdad pegados"></div>
+        <p class="explica">Con todos los paréntesis, cada fórmula binaria va entre paréntesis, también la exterior, como en la definición inductiva (§1.1.1).</p>
+      </details>
+    </section>
+  </main>
+
+  <footer>
+    Material complementario de los <i>Apuntes de Lógica</i> (Grado en Filosofía, Universidad de Sevilla). Fernando Soler Toscano.
+  </footer>
+
+  <script src="../comun/js/datos.js"></script>
+  <script src="../comun/js/ayuda.js"></script>
+  <script src="datos/ejemplos.js"></script>
+  <script src="../comun/js/primerorden.js"></script>
+  <script src="js/sintaxis.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

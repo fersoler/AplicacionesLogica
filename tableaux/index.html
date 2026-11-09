@@ -1,0 +1,147 @@
+<!doctype html>
+<!-- SPDX-License-Identifier: GPL-3.0-or-later. Copyright (C) 2026 Fernando Soler Toscano -->
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Tableaux semánticos</title>
+  <meta name="description" content="El método de tableaux del tema 6: reglas α, β, γ y δ, ramas cerradas y abiertas, y extracción de contramodelos, paso a paso o construido por el alumno.">
+  <link rel="stylesheet" href="../comun/css/base.css">
+  <link rel="stylesheet" href="css/tableaux.css">
+</head>
+<body>
+  <header>
+    <div class="volver"><a href="../index.html">← Aplicaciones de lógica</a></div>
+    <h1>Tableaux semánticos</h1>
+    <p class="subtitulo">El cálculo de tableaux (tema 6): reglas α, β, γ y δ, ramas cerradas y abiertas, y contramodelos leídos de las ramas abiertas.</p>
+  </header>
+
+  <main>
+    <section class="bloque panel" id="entrada">
+      <div class="fila-entrada">
+        <select id="ejemplos" aria-label="Ejemplos"><option value="">Ejemplos…</option></select>
+      </div>
+      <fieldset class="opciones-fila" id="modos">
+        <legend class="rotulo">¿Qué quieres comprobar? (§6.5)</legend>
+        <label><input type="radio" name="modo" value="consecuencia" checked> Consecuencia (Γ ⊨ A)</label>
+        <label><input type="radio" name="modo" value="validez"> Validez (⊨ A)</label>
+        <label><input type="radio" name="modo" value="satisfacibilidad"> Satisfacibilidad de Γ</label>
+        <label><input type="radio" name="modo" value="equivalencia"> Equivalencia (A ≡ B)</label>
+      </fieldset>
+      <div class="simbolos-botones" id="simbolos"></div>
+      <div id="campo-lista">
+        <label class="rotulo" for="lista" id="rotulo-lista">Premisas (una por línea; pueden faltar)</label>
+        <textarea id="lista" rows="3" spellcheck="false"></textarea>
+      </div>
+      <div id="campo-f1">
+        <label class="rotulo" for="f1" id="rotulo-f1">Conclusión</label>
+        <input id="f1" type="text" spellcheck="false" autocomplete="off">
+      </div>
+      <div id="campo-f2" hidden>
+        <label class="rotulo" for="f2">Fórmula B</label>
+        <input id="f2" type="text" spellcheck="false" autocomplete="off">
+      </div>
+      <div class="opciones-fila">
+        <label><input type="radio" name="construccion" value="auto" checked> Verlo paso a paso</label>
+        <label><input type="radio" name="construccion" value="manual"> Construirlo yo</label>
+        <label>Constantes por rama, como mucho:
+          <select id="limite"><option>3</option><option>4</option><option selected>5</option><option>6</option><option>8</option><option>10</option></select>
+        </label>
+        <label title="§6.9: la regla δ prueba también con las constantes que ya hay en la rama"><input type="checkbox" id="boolos"> Regla δ de Boolos (§6.9)</label>
+      </div>
+      <button type="button" id="b-construir">Construir el tableau</button>
+      <div id="error" class="error" role="alert"></div>
+    </section>
+
+    <section class="bloque" id="sec-arbol" hidden>
+      <div class="cabecera-arbol">
+        <p id="objetivo" class="formula-grande"></p>
+        <div class="botones-fila zoom">
+          <label><input type="checkbox" id="justificaciones" checked> Justificaciones</label>
+          <button type="button" id="b-menos" class="secundario mini" aria-label="Reducir">−</button>
+          <button type="button" id="b-mas" class="secundario mini" aria-label="Ampliar">+</button>
+        </div>
+      </div>
+      <div id="controles-auto" class="botones-fila">
+        <button type="button" id="b-inicio" class="secundario" aria-label="Al principio">⏮</button>
+        <button type="button" id="b-atras" class="secundario">◀ Anterior</button>
+        <button type="button" id="b-adelante">Siguiente ▶</button>
+        <button type="button" id="b-final" class="secundario" aria-label="Al final">⏭</button>
+        <span id="contador" class="explica"></span>
+      </div>
+      <div id="controles-manual" class="botones-fila" hidden>
+        <span class="explica">Pulsa la fórmula que quieras descomponer.</span>
+        <button type="button" id="b-deshacer" class="secundario">Deshacer</button>
+        <button type="button" id="b-terminar" class="secundario">Terminarlo automáticamente</button>
+        <button type="button" id="b-reiniciar" class="secundario">Empezar de nuevo</button>
+      </div>
+      <div id="elegir-constante" class="mensaje" hidden></div>
+      <div id="mensaje-paso" class="mensaje"></div>
+      <div class="desplazable marco-arbol"><div id="arbol" class="arbol-tableau"></div></div>
+      <div class="botones-fila">
+        <button type="button" class="secundario mini" id="b-latex">Exportar a LaTeX</button>
+        <button type="button" class="secundario mini" id="b-texto">Exportar como texto</button>
+      </div>
+      <div id="exportacion" hidden>
+        <textarea id="exportado" rows="10" readonly spellcheck="false"></textarea>
+        <div class="botones-fila">
+          <button type="button" class="secundario mini" id="b-copiar">Copiar</button>
+          <span id="copiado" class="explica"></span>
+        </div>
+        <p id="nota-preambulo" class="explica" hidden>Se exporta el árbol tal como se ve. Para compilarlo, el preámbulo del documento necesita <code>\usepackage{tikz}</code>. Los árboles más anchos que la página se reducen a escala.</p>
+      </div>
+      <div id="resultado"></div>
+    </section>
+
+    <section class="bloque">
+      <details class="ayuda">
+        <summary>Reglas y cómo escribir las fórmulas</summary>
+        <div class="tablas-reglas">
+          <table class="reglas"><caption>α: no ramifican</caption>
+            <tr><th>α</th><th>α₁</th><th>α₂</th></tr>
+            <tr><td>A ∧ B</td><td>A</td><td>B</td></tr>
+            <tr><td>¬(A ∨ B)</td><td>¬A</td><td>¬B</td></tr>
+            <tr><td>¬(A → B)</td><td>A</td><td>¬B</td></tr>
+          </table>
+          <table class="reglas"><caption>β: ramifican</caption>
+            <tr><th>β</th><th>β₁</th><th>β₂</th></tr>
+            <tr><td>A ∨ B</td><td>A</td><td>B</td></tr>
+            <tr><td>¬(A ∧ B)</td><td>¬A</td><td>¬B</td></tr>
+            <tr><td>A → B</td><td>¬A</td><td>B</td></tr>
+            <tr><td>A ↔ B</td><td>A ∧ B</td><td>¬A ∧ ¬B</td></tr>
+            <tr><td>¬(A ↔ B)</td><td>A ∧ ¬B</td><td>¬A ∧ B</td></tr>
+          </table>
+          <table class="reglas"><caption>γ: con cada constante de la rama</caption>
+            <tr><th>γ</th><th>γ(c)</th></tr>
+            <tr><td>∀x A(x)</td><td>A(c)</td></tr>
+            <tr><td>¬∃x A(x)</td><td>¬A(c)</td></tr>
+          </table>
+          <table class="reglas"><caption>δ: con una constante nueva</caption>
+            <tr><th>δ</th><th>δ(a)</th></tr>
+            <tr><td>∃x A(x)</td><td>A(a)</td></tr>
+            <tr><td>¬∀x A(x)</td><td>¬A(a)</td></tr>
+          </table>
+          <table class="reglas"><caption>σ: doble negación</caption>
+            <tr><th>σ</th><th>σ₁</th></tr>
+            <tr><td>¬¬A</td><td>A</td></tr>
+          </table>
+        </div>
+        <p class="explica">Clasificación de Smullyan (§6.2) y reglas de §6.3. Una rama se cierra (⊗) en cuanto contiene una fórmula y su negación. La construcción automática sigue la prioridad de §6.3.2 (α y σ, δ, γ, β) y expande primero la rama abierta de más a la izquierda. Una rama abierta y completa da un modelo (§6.4): el dominio son sus constantes y cada predicado se cumple en las tuplas de sus literales afirmados. En primer orden puede haber ramas infinitas (§6.9): la aplicación las corta al llegar al límite de constantes y las marca como incompletas.</p>
+        <div data-ayuda-sintaxis="prop cuant pegados"></div>
+        <p class="explica">Sin identidad ni funciones, como en el tema 6.</p>
+      </details>
+    </section>
+  </main>
+
+  <footer>
+    Material complementario de los <i>Apuntes de Lógica</i> (Grado en Filosofía, Universidad de Sevilla). Fernando Soler Toscano.
+  </footer>
+
+  <script src="../comun/js/datos.js"></script>
+  <script src="../comun/js/ayuda.js"></script>
+  <script src="datos/ejemplos.js"></script>
+  <script src="../comun/js/primerorden.js"></script>
+  <script src="js/tableaux.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

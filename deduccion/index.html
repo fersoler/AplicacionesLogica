@@ -1,0 +1,114 @@
+<!doctype html>
+<!-- SPDX-License-Identifier: GPL-3.0-or-later. Copyright (C) 2026 Fernando Soler Toscano -->
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Deducción natural</title>
+  <meta name="description" content="Asistente para construir derivaciones de deducción natural (estilo Fitch) con las reglas de los Apuntes de Lógica, comprobadas línea a línea, con los ejercicios del libro.">
+  <link rel="stylesheet" href="../comun/css/base.css">
+  <link rel="stylesheet" href="css/deduccion.css">
+</head>
+<body>
+  <header>
+    <div class="volver"><a href="../index.html">← Aplicaciones de lógica</a></div>
+    <h1>Deducción natural</h1>
+    <p class="subtitulo">Lógica proposicional (tema 1) y de primer orden (tema 4): derivaciones con las reglas del libro, comprobadas línea a línea mientras se escriben.</p>
+  </header>
+
+  <main>
+    <section class="bloque panel" id="sec-problema">
+      <label class="rotulo" for="ejercicios">Ejercicios del libro</label>
+      <div class="fila-entrada">
+        <select id="ejercicios"><option value="">Elige un ejercicio…</option></select>
+      </div>
+      <details id="otro-argumento">
+        <summary>Otro argumento</summary>
+        <label class="rotulo" for="premisas">Premisas (una por línea; pueden faltar)</label>
+        <div class="simbolos-botones" data-destino="premisas"></div>
+        <textarea id="premisas" rows="2" spellcheck="false"></textarea>
+        <label class="rotulo" for="conclusion">Conclusión</label>
+        <div class="simbolos-botones" data-destino="conclusion"></div>
+        <input id="conclusion" type="text" spellcheck="false" autocomplete="off">
+        <div class="botones-fila"><button type="button" id="b-empezar">Empezar la prueba</button></div>
+      </details>
+      <div id="error-problema" class="error" role="alert"></div>
+    </section>
+
+    <section class="bloque" id="sec-prueba" hidden>
+      <div id="info-ejercicio" class="info-ejercicio" hidden>
+        <p class="rotulo" id="nivel-ejercicio"></p>
+        <p id="enunciado-ejercicio"></p>
+        <div class="botones-fila">
+          <button type="button" class="secundario mini" id="b-pista" hidden>Ver la pista del libro</button>
+          <button type="button" class="secundario mini" id="b-plantilla" hidden>Cargar la plantilla del libro</button>
+        </div>
+        <p id="pista-ejercicio" class="explica" hidden></p>
+      </div>
+      <div class="cabecera-prueba">
+        <p id="argumento" class="formula-grande"></p>
+        <label class="basicas"><input type="checkbox" id="solo-basicas"> Solo reglas básicas</label>
+      </div>
+      <div class="desplazable marco-prueba">
+        <table id="prueba" class="fitch editor-fitch"><tbody></tbody></table>
+      </div>
+      <div class="barra-edicion" role="toolbar" aria-label="Edición de la prueba">
+        <div class="botones-fila">
+          <button type="button" class="mini" id="b-linea" title="Línea nueva en el mismo nivel (Intro)">Nueva línea</button>
+          <button type="button" class="secundario mini" id="b-abrir" title="Abrir una caja con una hipótesis (Ctrl+Intro)">Abrir caja</button>
+          <button type="button" class="secundario mini" id="b-cerrar" title="Cerrar la caja y seguir fuera (Mayús+Intro)">Cerrar caja</button>
+          <span class="atajos">Intro · Ctrl+Intro · Mayús+Intro</span>
+        </div>
+        <div id="paleta" class="paleta" aria-label="Símbolos o reglas"></div>
+      </div>
+      <div id="estado" class="mensaje" role="status" aria-live="polite"></div>
+      <div class="botones-fila">
+        <button type="button" id="b-siguiente" hidden>Siguiente ejercicio →</button>
+        <button type="button" class="secundario" id="b-latex">Exportar a LaTeX</button>
+        <button type="button" class="secundario" id="b-texto">Exportar como texto</button>
+        <button type="button" class="secundario" id="b-reiniciar">Empezar de nuevo</button>
+      </div>
+      <div id="exportacion" hidden>
+        <textarea id="exportado" rows="10" readonly spellcheck="false"></textarea>
+        <div class="botones-fila">
+          <button type="button" class="secundario mini" id="b-copiar">Copiar</button>
+          <span id="copiado" class="explica"></span>
+        </div>
+        <div id="nota-preambulo" hidden>
+          <p class="explica">Para compilarlo, el preámbulo del documento necesita el paquete <code>fitch</code> y las macros de las reglas, como en el libro:</p>
+          <textarea id="preambulo" rows="6" readonly spellcheck="false"></textarea>
+        </div>
+      </div>
+    </section>
+
+    <section class="bloque">
+      <details class="ayuda">
+        <summary>Cómo se escribe una prueba</summary>
+        <div class="ayuda-texto">
+          <p><strong>Líneas.</strong> Cada línea tiene una fórmula y su justificación: la regla y las líneas que cita, como <code>→E 1, 2</code>. Las cajas se citan desde su hipótesis hasta su última línea: <code>→I 3-5</code>. Las citas siguen el orden de los esquemas del libro (apéndice C): primero el condicional en →E y MT, la negación en ¬E, la disyunción en ∨E y DS, el bicondicional en ↔E, la identidad en =E y el existencial en ∃E.</p>
+          <p><strong>Cajas.</strong> «Abrir caja» añade una hipótesis; las líneas que siguen quedan dentro hasta que la cierras. Sobre una línea vacía, abrir o cerrar la caja transforma esa misma línea. En la justificación de una hipótesis puedes escribir <code>Hip. IP</code> o <code>Hip. testigo c</code> (para ∃E); si no, queda «Hip.». En la línea activa, los botones ⇤, ⇥ y ✕ la sacan de su caja, la meten en la caja de la línea anterior o la borran.</p>
+          <p><strong>Teclado.</strong> <kbd>Intro</kbd>: línea nueva en el mismo nivel. <kbd>Ctrl+Intro</kbd>: abrir una caja. <kbd>Mayús+Intro</kbd>: cerrar la caja y seguir fuera. <kbd>↑</kbd> y <kbd>↓</kbd>: cambiar de línea. <kbd>Retroceso</kbd> en una línea vacía: borrarla. Al insertar o borrar líneas, las citas se renumeran solas.</p>
+          <p><strong>Reglas.</strong> Básicas: R, ∧I, ∧E, ∨I, ∨E, →I, →E, ¬I, ¬E, X, IP, ↔I, ↔E, y en primer orden ∀E, ∀I, ∃I, ∃E, =I, =E. Derivadas: MT, DS, DNE, LEM, DeM, CQ (se desactivan con «Solo reglas básicas», que también quita sus botones). También se entienden <code>&amp;E</code>, <code>|I</code>, <code>-&gt;E</code>, <code>~E</code>, <code>AE</code>, <code>EI</code>… Mientras escribes una justificación, debajo de la prueba aparecen los botones de las reglas; mientras escribes una fórmula, los de los símbolos.</p>
+          <p><strong>Fórmulas.</strong> Al salir de una fórmula se reescribe con la notación del libro, para que veas cómo se ha leído.</p>
+          <div data-ayuda-sintaxis="prop bot cuant igualdad pegados"></div>
+          <p><strong>Exportar.</strong> La exportación a LaTeX usa el paquete <code>fitch</code> con las macros del libro; al exportar se muestra lo que hay que poner en el preámbulo.</p>
+          <p><strong>Guardado.</strong> La prueba se guarda solo en este navegador (en su almacenamiento local) y en la dirección de la página: no se envía a ningún sitio, y no hay cookies ni seguimiento. Para guardarla en otro sitio o enviarla, basta copiar la dirección. Los ejercicios terminados se marcan con ✓ en la lista. <button type="button" id="b-borrar-guardado" class="secundario mini">Borrar lo guardado</button> <span id="borrado" role="status"></span></p>
+        </div>
+      </details>
+    </section>
+  </main>
+
+  <footer>
+    Material complementario de los <i>Apuntes de Lógica</i> (Grado en Filosofía, Universidad de Sevilla). Fernando Soler Toscano.
+  </footer>
+
+  <script src="../comun/js/datos.js"></script>
+  <script src="../comun/js/ayuda.js"></script>
+  <script src="datos/ejercicios.js"></script>
+  <script src="../comun/js/formulas.js"></script>
+  <script src="../comun/js/primerorden.js"></script>
+  <script src="../comun/js/verificador.js"></script>
+  <script src="js/editor.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,87 @@
+/* SPDX-License-Identifier: GPL-3.0-or-later
+   Copyright (C) 2026 Fernando Soler Toscano */
+/* Estilos propios de las tablas de verdad (el resto está en comun/css/base.css) */
+
+.panel textarea, .panel input[type="text"] { width: 100%; }
+.fila-entrada textarea, .fila-entrada input[type="text"] { flex: 1 1 260px; width: auto; min-width: 0; }
+#frases { flex: 1 1 260px; }
+#conclusion { margin-bottom: 4px; }
+
+/* Tabla para rellenar */
+.tabla-ejercicio { margin: 10px 0 4px; }
+.tabla-ejercicio tbody tr { cursor: default; }
+.tabla-ejercicio th.n, .tabla-ejercicio td { vertical-align: middle; }
+.tabla-ejercicio th.n { color: var(--suave); font-family: system-ui, sans-serif; font-size: 0.85rem; border-bottom: 1px solid var(--borde); }
+.tabla-ejercicio .div { border-left: 1px solid var(--borde); }
+.tabla-ejercicio thead tr.etiquetas th { border-bottom: none; font: 0.75rem system-ui, sans-serif; color: var(--suave); padding-bottom: 0; }
+.tabla-ejercicio thead tr.rellenar th { border-bottom: 2px solid var(--texto); padding: 3px 4px; }
+.tabla-ejercicio thead tr.rellenar th button + button { margin-left: 3px; }
+.tabla-ejercicio thead tr:not(.etiquetas):not(:last-child) th { border-bottom: none; }
+.tabla-ejercicio th.dep { background: var(--resalte); }
+.tabla-ejercicio td.dep { background: var(--resalte); box-shadow: inset 0 0 0 1px var(--resalte-borde); }
+.tabla-ejercicio .columna-resaltada { background: var(--acento-suave); }
+button.celda {
+  width: 2.1em; height: 1.75em; padding: 0; font: 1.05rem var(--f-formula); color: var(--texto);
+  background: transparent; border: 1px dashed var(--suave); border-radius: 4px;
+}
+button.celda.llena { border-style: solid; border-color: var(--borde); background: var(--tarjeta); }
+button.celda:hover, button.celda:focus-visible { border-color: var(--acento); outline: 2px solid var(--acento); outline-offset: 0; }
+button.celda.mal { background: var(--error-suave); border-color: var(--error); color: var(--error); font-weight: 700; }
+button.celda.vacia { border-color: var(--error); border-width: 2px; }
+button.celda.revelada { background: var(--resalte); border-color: var(--resalte-borde); }
+.principal button.celda { font-weight: 700; }
+th.n button.fila { font: 0.85rem system-ui, sans-serif; padding: 0 6px; min-width: 2em; background: transparent; color: var(--acento); border-color: var(--borde); }
+th.n button.fila[aria-pressed="true"] { background: var(--error); border-color: var(--error); color: #fff; }
+tr.marcada td, tr.marcada th { background: var(--error-suave); }
+tr.premisas-v td { background: var(--acento-suave); }
+tr.contraejemplo td { background: var(--error-suave); }
+tr.modelo td, tr.diferencia td { background: var(--resalte); }
+
+/* Preguntas */
+.pregunta { margin: 10px 0 14px; }
+.pregunta .enunciado { margin: 0 0 4px; }
+.pregunta .mensaje { margin-top: 4px; }
+.mensaje .fo { font-size: 1.05rem; }
+.mensaje button { margin-left: 4px; font-size: 0.85rem; padding: 2px 10px; }
+.mensaje .comentario { margin: 6px 0 0; }
+.detalle p { margin: 6px 0 10px; }
+.detalle p button { font-size: 0.85rem; padding: 2px 10px; margin-left: 4px; }
+#argumento { margin: 10px 0 0; }
+#b-asignacion { margin-top: 6px; }
+
+/* Asignación directa */
+.pasos-asignacion { list-style: none; padding: 0; margin: 8px 0; }
+.pasos-asignacion li { padding: 3px 8px; border-left: 3px solid var(--borde); margin: 2px 0; }
+.pasos-asignacion li.exige { border-left-color: var(--acento); }
+.pasos-asignacion li.caso { font-weight: 600; border-left-color: var(--resalte-borde); margin-top: 8px; }
+.pasos-asignacion li.casos { border-left-color: var(--resalte-borde); }
+.pasos-asignacion li.contradiccion { color: var(--error); border-left-color: var(--error); }
+.pasos-asignacion li.abierta { color: var(--ok); border-left-color: var(--ok); }
+.pasos-asignacion li.final-valido, .pasos-asignacion li.final-invalido { font-weight: 700; margin-top: 10px; border-left-color: var(--texto); }
+
+/* Una interpretación */
+.interpretacion { display: flex; flex-wrap: wrap; gap: 6px 10px; align-items: center; margin: 6px 0 10px; }
+.interpretacion button.var { font-family: var(--f-formula); font-size: 1.05rem; padding: 2px 10px; }
+.pasos-evaluar { padding-left: 1.6em; margin: 8px 0; }
+.pasos-evaluar li { margin: 5px 0; }
+.pasos-evaluar li .fo { font-size: 1.08rem; }
+.pasos-evaluar li button { margin-left: 4px; font-family: var(--f-formula); font-size: 1rem; }
+.pasos-evaluar .porque { color: var(--suave); font-size: 0.92rem; }
+.pasos-evaluar li.fallo .valor { outline: 2px solid var(--error); }
+.pasos-evaluar .nota-fallo { color: var(--error); font-size: 0.9rem; }
+.resultado-evaluar { font-size: 1.1rem; }
+
+/* Formalizar */
+.diccionario-frase { margin: 4px 0 10px; }
+.diccionario-frase div { margin: 2px 0; }
+.diccionario-frase .fo { font-size: 1.1rem; font-weight: 700; }
+
+/* Ayuda */
+.tablas-conectivas { display: flex; flex-wrap: wrap; gap: 14px 26px; align-items: flex-start; margin: 8px 0; }
+.tablas-conectivas .tabla-verdad tbody tr, .tablas-conectivas .tabla-verdad tr { cursor: default; }
+.tablas-conectivas .tabla-verdad tr:hover { background: none; }
+
+@media (max-width: 600px) {
+  .tabla-ejercicio th, .tabla-ejercicio td { padding: 2px 5px; }
+  button.celda { width: 1.8em; }
+}

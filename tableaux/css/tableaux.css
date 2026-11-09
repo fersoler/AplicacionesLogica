@@ -1,0 +1,62 @@
+/* SPDX-License-Identifier: GPL-3.0-or-later
+   Copyright (C) 2026 Fernando Soler Toscano */
+/* Estilos propios de los tableaux (el resto está en comun/css/base.css) */
+:root { --aviso: #a35a00; }
+@media (prefers-color-scheme: dark) { :root { --aviso: #f0a64a; } }
+
+#entrada fieldset { border: none; padding: 0; margin: 10px 0 4px; }
+#entrada legend { padding: 0; margin-bottom: 4px; }
+#entrada textarea, #entrada input[type="text"] { width: 100%; margin-bottom: 8px; }
+#entrada select { margin-left: 4px; }
+
+.cabecera-arbol { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 8px; }
+.cabecera-arbol .formula-grande { margin: 0; }
+.zoom { margin: 0; font-size: 0.9rem; }
+#elegir-constante button { margin-left: 6px; }
+
+/* Árbol: cada segmento es una cadena de nodos; las bifurcaciones van en columnas. */
+.marco-arbol { border: 1px solid var(--borde); border-radius: 6px; background: var(--fondo); margin: 8px 0; }
+.arbol-tableau { display: inline-flex; justify-content: center; min-width: 100%; padding: 14px 10px 18px; font-size: calc(1rem * var(--escala, 1)); }
+.nodo { display: grid; grid-template-columns: 1fr auto 1fr; align-items: baseline; column-gap: 0.5em; white-space: nowrap; }
+.nodo .num { text-align: right; color: var(--suave); font-size: 0.8em; }
+.nodo .f { font-family: var(--f-formula); font-size: 1.08em; padding: 1px 5px; border-radius: 4px; }
+.nodo .just { text-align: left; color: var(--acento); font-size: 0.78em; }
+.sin-just .nodo .just { visibility: hidden; }
+
+.nodo.nuevo .f { background: var(--resalte); box-shadow: 0 0 0 1px var(--resalte-borde); }
+.nodo.origen .f { outline: 2px solid var(--acento); outline-offset: 1px; }
+.nodo.en-rama .f { background: var(--acento-suave); }
+.nodo.expandible .f { cursor: pointer; border-bottom: 2px dotted var(--acento); border-radius: 4px 4px 0 0; }
+.nodo.expandible .f:hover, .nodo.expandible .f:focus-visible { background: var(--acento-suave); outline: 2px solid var(--acento); }
+
+.cerrar-rama { font: 1.1em var(--f-formula); line-height: 1; padding: 0 6px 2px; margin-top: 1px; background: transparent; color: var(--error); border: 1.5px dashed var(--error); border-radius: 50%; }
+.cerrar-rama:hover, .cerrar-rama[aria-pressed="true"] { background: var(--error-suave); border-style: solid; }
+.nodo.seleccionable .f { cursor: pointer; outline: 1.5px dashed var(--error); outline-offset: 1px; }
+.nodo.seleccionable .f:hover, .nodo.seleccionable .f:focus-visible { background: var(--error-suave); }
+.nodo.seleccionado .f { background: var(--error-suave); outline: 2px solid var(--error); }
+.nodo.fuera { opacity: 0.4; }
+.fin { display: flex; flex-direction: column; align-items: center; line-height: 1.1; }
+.fin.cerrada { color: var(--error); }
+.fin.cerrada .simbolo { font-size: 1.3em; font-family: var(--f-formula); }
+.fin.cerrada .pares { font-size: 0.75em; }
+.fin.abierta button { font: 700 0.8em system-ui, sans-serif; padding: 1px 8px; background: transparent; color: var(--ok); border: 1.5px solid var(--ok); }
+.fin.abierta button.elegida { background: var(--ok); color: #fff; }
+@media (prefers-color-scheme: dark) { .fin.abierta button.elegida { color: #10161c; } }
+.fin.incompleta { color: var(--aviso); font: 700 0.8em system-ui, sans-serif; cursor: help; }
+
+/* Resultado y modelo */
+.modelo h3 { margin-top: 14px; }
+.modelo .linea { margin: 4px 0; }
+.modelo .fo { font-size: 1.05rem; }
+table.comprobacion { border-collapse: collapse; margin: 4px 0 8px; }
+table.comprobacion td { padding: 3px 10px; border-bottom: 1px solid var(--borde); }
+table.comprobacion td.fo { font-size: 1.05rem; }
+
+/* Ayuda: tablas de reglas */
+.tablas-reglas { display: flex; flex-wrap: wrap; gap: 14px 24px; align-items: flex-start; margin: 10px 0; }
+table.reglas { border-collapse: collapse; font-family: var(--f-formula); }
+table.reglas caption { font: 0.85rem system-ui, sans-serif; color: var(--suave); text-align: left; padding-bottom: 3px; }
+table.reglas th, table.reglas td { padding: 2px 10px; border-bottom: 1px solid var(--borde); text-align: left; }
+table.reglas th { border-bottom: 2px solid var(--texto); font-weight: normal; }
+
+#exportado { width: 100%; font: 0.9rem ui-monospace, Menlo, Consolas, monospace; margin-top: 8px; padding: 6px; border: 1px solid var(--borde); border-radius: 6px; background: var(--fondo); color: var(--texto); }

@@ -1,0 +1,130 @@
+<!doctype html>
+<!-- SPDX-License-Identifier: GPL-3.0-or-later. Copyright (C) 2026 Fernando Soler Toscano -->
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>El mundo de Tarski</title>
+  <meta name="description" content="Semántica de primer orden con un mundo de piezas: estructuras, satisfacción de Tarski, contramodelos y formalización.">
+  <link rel="stylesheet" href="../comun/css/base.css">
+  <link rel="stylesheet" href="css/mundo.css">
+</head>
+<body>
+  <header>
+    <div class="volver"><a href="../index.html">← Aplicaciones de lógica</a></div>
+    <h1>El mundo de Tarski</h1>
+    <p class="subtitulo">Semántica de la lógica de primer orden (tema 5): estructuras, satisfacción, contramodelos y formalización.</p>
+  </header>
+
+  <main>
+    <section class="bloque" id="sec-mundo">
+      <h2>El mundo</h2>
+      <div class="disposicion">
+        <div class="marco-tablero">
+          <div id="tablero" class="tablero" role="grid" aria-label="Tablero"></div>
+          <p class="explica pie-tablero">Cada pieza es un objeto del dominio, numerado 1, 2, 3… Las letras son sus nombres (constantes); una pieza puede tener varios o ninguno.</p>
+        </div>
+        <div class="herramientas">
+          <h3 id="titulo-pieza">Nueva pieza</h3>
+          <div class="grupo"><span class="rotulo">Forma</span><div id="b-formas" class="opciones"></div></div>
+          <div class="grupo"><span class="rotulo">Tamaño</span><div id="b-tamanos" class="opciones"></div></div>
+          <div class="grupo"><span class="rotulo">Color</span><div id="b-colores" class="opciones"></div></div>
+          <div class="grupo">
+            <label class="rotulo" for="nombres">Nombres (de la a a la r)</label>
+            <input id="nombres" type="text" spellcheck="false" autocomplete="off" placeholder="por ejemplo: a, b">
+          </div>
+          <div id="acciones-pieza" class="opciones" hidden>
+            <button type="button" id="b-eliminar" class="secundario">Eliminar la pieza</button>
+            <button type="button" id="b-deseleccionar" class="secundario">Deseleccionar</button>
+          </div>
+          <div id="aviso-pieza" class="error" role="alert"></div>
+          <p class="explica" id="ayuda-tablero"></p>
+          <div class="opciones">
+            <button type="button" id="b-ejemplo" class="secundario">Mundo de ejemplo</button>
+            <button type="button" id="b-azar" class="secundario">Mundo al azar</button>
+            <button type="button" id="b-vaciar" class="secundario">Vaciar</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="bloque" id="sec-trabajo">
+      <div class="pestanas" role="tablist">
+        <button type="button" role="tab" data-panel="evaluar">Evaluar</button>
+        <button type="button" role="tab" data-panel="contramodelos">Contramodelos</button>
+        <button type="button" role="tab" data-panel="formalizar">Formalizar</button>
+        <button type="button" role="tab" data-panel="estructura">La estructura</button>
+      </div>
+
+      <div id="panel-evaluar" class="panel">
+        <p class="explica">Escribe una fórmula y mira su valor en este mundo. El árbol sigue la definición de satisfacción de Tarski: pulsa ▸ para desplegar cada paso y pasa el ratón por encima para ver en el tablero los objetos que asigna.</p>
+        <div class="simbolos-botones" data-destino="formula"></div>
+        <div class="fila-entrada">
+          <input id="formula" type="text" spellcheck="false" autocomplete="off">
+          <select id="ejemplos" aria-label="Ejemplos"><option value="">Ejemplos…</option></select>
+        </div>
+        <div id="error-formula" class="error" role="alert"></div>
+        <div id="resultado"></div>
+        <ul id="arbol" class="arbol-evaluacion"></ul>
+      </div>
+
+      <div id="panel-contramodelos" class="panel" hidden>
+        <p class="explica">Un contramodelo de un argumento es una estructura en la que las premisas son verdaderas y la conclusión falsa (§5.3). Construye uno en el tablero, o elige un reto.</p>
+        <div class="fila-entrada"><select id="retos" aria-label="Retos"><option value="">Retos…</option></select></div>
+        <div id="pista-reto" class="explica"></div>
+        <label class="rotulo" for="premisas">Premisas (una por línea; pueden faltar)</label>
+        <div class="simbolos-botones" data-destino="premisas"></div>
+        <textarea id="premisas" rows="3" spellcheck="false"></textarea>
+        <label class="rotulo" for="conclusion">Conclusión</label>
+        <input id="conclusion" type="text" spellcheck="false" autocomplete="off">
+        <div id="tabla-argumento"></div>
+        <div id="veredicto" class="mensaje"></div>
+        <button type="button" id="b-mostrar-contramodelo" class="secundario">Mostrar un contramodelo</button>
+        <div id="nota-contramodelo" class="explica"></div>
+      </div>
+
+      <div id="panel-formalizar" class="panel" hidden>
+        <p class="explica">Formaliza la frase con el diccionario de este mundo. La aplicación compara tu fórmula con una formalización correcta en muchos mundos al azar: si en alguno dan valores distintos, te lo enseña.</p>
+        <div class="fila-entrada">
+          <button type="button" id="b-anterior" class="secundario" aria-label="Frase anterior">◀</button>
+          <select id="frases" aria-label="Frase"></select>
+          <button type="button" id="b-siguiente" class="secundario" aria-label="Frase siguiente">▶</button>
+        </div>
+        <p id="frase" class="frase"></p>
+        <div class="simbolos-botones" data-destino="formalizacion"></div>
+        <div class="fila-entrada">
+          <input id="formalizacion" type="text" spellcheck="false" autocomplete="off">
+          <button type="button" id="b-comprobar">Comprobar</button>
+        </div>
+        <div id="resultado-formalizacion"></div>
+        <button type="button" id="b-solucion" class="secundario">Ver una solución</button>
+        <p id="solucion" class="formula-grande" hidden></p>
+      </div>
+
+      <div id="panel-estructura" class="panel" hidden>
+        <p class="explica">El tablero determina una estructura M = ⟨D, I⟩: el dominio D son las piezas, I asigna a cada constante su pieza y a cada predicado el conjunto de objetos (o de pares) que lo cumplen (§5.1.1).</p>
+        <div id="estructura" class="estructura"></div>
+      </div>
+    </section>
+
+    <section class="bloque">
+      <details class="ayuda" open>
+        <summary>Diccionario y cómo escribir las fórmulas</summary>
+        <div id="diccionario" class="diccionario"></div>
+        <div data-ayuda-sintaxis="cuant igualdad palabras"></div>
+      </details>
+    </section>
+  </main>
+
+  <footer>
+    Material complementario de los <i>Apuntes de Lógica</i> (Grado en Filosofía, Universidad de Sevilla). Fernando Soler Toscano.
+  </footer>
+
+  <script src="../comun/js/datos.js"></script>
+  <script src="../comun/js/ayuda.js"></script>
+  <script src="datos/mundo.js"></script>
+  <script src="../comun/js/primerorden.js"></script>
+  <script src="js/mundo.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

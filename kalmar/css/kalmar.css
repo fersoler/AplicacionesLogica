@@ -1,0 +1,53 @@
+/* SPDX-License-Identifier: GPL-3.0-or-later
+   Copyright (C) 2026 Fernando Soler Toscano */
+/* Estilos propios de la aplicación de Kalmár (el resto está en comun/css/base.css) */
+/* Colapso */
+.controles { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; margin-bottom: 8px; }
+.controles button { min-width: 2.6em; }
+.contador { color: var(--suave); font-size: 0.9rem; margin-left: 6px; }
+.mensaje-paso {
+  border-left: 4px solid var(--acento); background: var(--acento-suave); padding: 8px 12px;
+  border-radius: 4px; margin-bottom: 12px;
+}
+.mensaje-paso.bloqueo { border-left-color: var(--error); background: var(--error-suave); }
+.mensaje-paso .fo { font-family: var(--f-formula); }
+
+.arbol { position: relative; display: grid; column-gap: 46px; row-gap: 8px; min-width: max-content; padding: 4px 2px 8px; }
+.arbol svg { position: absolute; left: 0; top: 0; pointer-events: none; overflow: visible; }
+.arbol svg path { fill: none; stroke: var(--borde); stroke-width: 1.5; }
+.arbol svg path.hecho { stroke: var(--suave); }
+.arbol svg path.activo { stroke: var(--resalte-borde); stroke-width: 3; }
+.arbol svg path.roto { stroke: var(--error); stroke-dasharray: 5 4; }
+.arbol svg path.oculto { stroke-dasharray: 3 4; }
+
+.tarjeta {
+  position: relative; z-index: 1; align-self: center; width: 200px;
+  border: 1px solid var(--borde); border-radius: 8px; padding: 6px 9px; background: var(--tarjeta);
+  font-size: 0.85rem; cursor: pointer; transition: box-shadow 0.2s, border-color 0.2s;
+}
+.tarjeta:hover { border-color: var(--acento); }
+.tarjeta.elegida { box-shadow: 0 0 0 3px var(--acento); }
+.tarjeta .titulo { font-weight: 600; display: flex; justify-content: space-between; gap: 6px; }
+.tarjeta .titulo .lin { font-weight: normal; color: var(--suave); }
+.tarjeta .franja { height: 6px; border-radius: 3px; margin: 3px 0 4px; display: flex; overflow: hidden; }
+.tarjeta .franja span { flex: 1; }
+.tarjeta .chips { display: flex; flex-wrap: wrap; gap: 4px; margin: 2px 0; }
+.chip { font-family: var(--f-formula); font-size: 0.95rem; padding: 0 6px; border-radius: 9px; border: 1px solid var(--borde); background: var(--fondo); }
+.chip.eliminada { background: var(--resalte); border-color: var(--resalte-borde); }
+.tarjeta .concl { font-family: var(--f-formula); font-size: 1rem; }
+.tarjeta.oculta { opacity: 0.45; border-style: dashed; cursor: default; background: transparent; }
+.tarjeta.oculta .chips, .tarjeta.oculta .concl { visibility: hidden; }
+.tarjeta.bloqueado { border-color: var(--error); background: var(--error-suave); }
+.tarjeta.imposible { border-style: dashed; color: var(--sin); }
+.tarjeta.fuente { border-color: var(--resalte-borde); box-shadow: 0 0 0 2px var(--resalte-borde); }
+.tarjeta.fuente.elegida { box-shadow: 0 0 0 2px var(--resalte-borde), 0 0 0 5px var(--acento); }
+.tarjeta.nueva { animation: aparece 0.7s ease-out; border-color: var(--resalte-borde); box-shadow: 0 0 0 3px var(--resalte-borde); }
+.tarjeta.final { border-width: 2px; border-color: var(--ok); }
+@keyframes aparece {
+  from { opacity: 0; transform: translateX(-36px) scale(0.92); }
+  to { opacity: 1; transform: none; }
+}
+@media (prefers-reduced-motion: reduce) { .tarjeta.nueva { animation: none; } }
+
+
+@media (max-width: 600px) { .tarjeta { width: 170px; } }

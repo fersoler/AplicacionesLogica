@@ -1,0 +1,63 @@
+/* SPDX-License-Identifier: GPL-3.0-or-later
+   Copyright (C) 2026 Fernando Soler Toscano */
+/* Estilos propios de la aplicación de sintaxis (el resto está en comun/css/base.css) */
+#formula, #ejercicio .fila-entrada input { flex: 1 1 320px; min-width: 0; }
+.grande { font-size: 1.35rem; margin: 10px 0; }
+.formula-piezas { font-family: var(--f-formula); white-space: pre-wrap; }
+.pieza { font: inherit; }
+button.pieza {
+  background: transparent; color: var(--texto); border: none; border-bottom: 2px dotted var(--acento);
+  padding: 0 2px; border-radius: 3px 3px 0 0; cursor: pointer; white-space: pre;
+}
+button.pieza:hover, button.pieza:focus-visible { background: var(--acento-suave); outline: none; }
+button.pieza.elegida-bien { background: #dff3e8; border-bottom-color: var(--ok); }
+button.pieza.elegida-mal { background: var(--error-suave); border-bottom-color: var(--error); }
+@media (prefers-color-scheme: dark) { button.pieza.elegida-bien { background: #1d3a2b; } }
+
+/* Variables libres y ligadas, alcance de los cuantificadores */
+.pieza.var.libre { color: var(--error); font-weight: 700; }
+.pieza.var.ligada { color: var(--acento); font-weight: 700; }
+.pieza.alcance { background: var(--resalte); }
+.pieza.activo { outline: 2px solid var(--resalte-borde); border-radius: 3px; }
+.pieza.enlazada { text-decoration: underline 2px; }
+.pieza.cuant { cursor: help; }
+button.pieza.var { position: relative; min-width: 1.1em; margin-right: 0.15em; }
+button.pieza.var[data-marca]::after {
+  content: attr(data-marca); position: absolute; right: -0.7em; top: -0.55em;
+  font: 700 0.55em system-ui, sans-serif; color: var(--suave);
+}
+button.pieza.var[data-marca="L"] { color: var(--error); }
+button.pieza.var[data-marca="G"] { color: var(--acento); }
+button.pieza.bien { box-shadow: 0 2px 0 var(--ok); }
+button.pieza.mal { background: var(--error-suave); }
+.leyenda-vars { margin-top: -4px; }
+.sustitucion .constante { width: 2.4em; text-align: center; font: 1rem var(--f-formula); padding: 2px 4px; border: 1px solid var(--borde); border-radius: 4px; background: var(--fondo); color: var(--texto); }
+.sustitucion select { margin: 0 2px; }
+
+/* Árbol de formación */
+.marco-arbol { border: 1px solid var(--borde); border-radius: 6px; background: var(--fondo); padding: 12px 8px; }
+.marco-arbol > .segmento { min-width: max-content; margin: 0 auto; }
+.nodo-formacion { font-family: var(--f-formula); font-size: 1.02rem; padding: 2px 8px; border: 1px solid var(--borde); border-radius: 6px; background: var(--tarjeta); white-space: nowrap; }
+.marca-principal { color: var(--acento); font-weight: 700; }
+.lista-subformulas { columns: 2 220px; margin: 6px 0; padding-left: 1.3em; }
+.lista-subformulas li { margin: 2px 0; }
+.lista-subformulas .fo { font-size: 1.05rem; }
+
+/* Ejercicios */
+.opciones-lectura { display: flex; flex-direction: column; align-items: flex-start; gap: 6px; margin: 8px 0; }
+button.lectura { font: 1.12rem var(--f-formula); color: var(--texto); border-color: var(--borde); }
+button.lectura.correcta { border-color: var(--ok); box-shadow: inset 4px 0 0 var(--ok); opacity: 1; }
+button.lectura.incorrecta { border-color: var(--error); box-shadow: inset 4px 0 0 var(--error); opacity: 1; }
+.candidatos { display: flex; flex-direction: column; gap: 4px; margin: 8px 0 10px; }
+.candidato { padding: 3px 8px; border-radius: 4px; cursor: pointer; width: fit-content; }
+.candidato .fo { font-size: 1.1rem; }
+.candidato.bien { background: #dff3e8; }
+.candidato.mal { background: var(--error-suave); }
+@media (prefers-color-scheme: dark) { .candidato.bien { background: #1d3a2b; } }
+
+/* Paréntesis coloreados por nivel de anidamiento; los de los argumentos, en el color del texto */
+.par.par-0, .pieza.par-0 { color: var(--c0); font-weight: 700; }
+.par.par-1, .pieza.par-1 { color: var(--c1); font-weight: 700; }
+.par.par-2, .pieza.par-2 { color: var(--c2); font-weight: 700; }
+.par.par-3, .pieza.par-3 { color: var(--c3); font-weight: 700; }
+.par.arg, .pieza.arg { color: var(--texto); }

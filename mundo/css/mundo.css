@@ -1,0 +1,85 @@
+/* SPDX-License-Identifier: GPL-3.0-or-later
+   Copyright (C) 2026 Fernando Soler Toscano */
+/* Estilos propios del mundo de Tarski (el resto está en comun/css/base.css) */
+:root {
+  --rojo: #d6504c; --verde: #3a9a5e; --azul: #3b72c2; --trazo: #1f2328;
+  --casilla: #f2f0ea; --casilla-osc: #e9e6dd;
+}
+@media (prefers-color-scheme: dark) {
+  :root { --rojo: #e0645f; --verde: #4caf72; --azul: #5b8fd8; --trazo: #0d0f12; --casilla: #262a30; --casilla-osc: #2c3037; }
+}
+
+
+/* Disposición del mundo: tablero y herramientas */
+.disposicion { display: flex; flex-wrap: wrap; gap: 20px; align-items: flex-start; }
+.marco-tablero { flex: 0 1 auto; }
+.pie-tablero { max-width: 390px; font-size: 0.85rem; margin: 6px 0 0; }
+.herramientas { flex: 1 1 260px; max-width: 420px; }
+.grupo { margin-bottom: 10px; }
+.opciones { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 8px; }
+.opciones button { background: transparent; color: var(--acento); padding: 4px 10px; min-width: 2.6em; }
+.opciones button[aria-pressed="true"] { background: var(--acento); color: #fff; }
+@media (prefers-color-scheme: dark) { .opciones button[aria-pressed="true"] { color: #10161c; } }
+.opciones button svg { width: 20px; height: 20px; vertical-align: middle; }
+.opciones button.color { width: 2.6em; height: 2em; border: 2px solid transparent; }
+.opciones button.color[aria-pressed="true"] { border-color: var(--texto); }
+#nombres { width: 100%; font: 1rem ui-monospace, Menlo, Consolas, monospace; padding: 6px 8px; border: 1px solid var(--borde); border-radius: 6px; background: var(--fondo); color: var(--texto); }
+
+/* Tablero */
+.tablero { display: grid; grid-template-columns: repeat(6, 60px); grid-template-rows: repeat(6, 60px); gap: 3px; padding: 6px; background: var(--borde); border-radius: 8px; width: max-content; }
+.casilla {
+  position: relative; margin: 0; display: flex; align-items: center; justify-content: center;
+  width: 60px; height: 60px; padding: 0; border: 2px solid transparent; border-radius: 5px;
+  background: var(--casilla); cursor: pointer; color: var(--texto);
+}
+.casilla.oscura { background: var(--casilla-osc); }
+.casilla:hover { border-color: var(--suave); }
+.casilla.seleccionada { border-color: var(--acento); box-shadow: 0 0 0 2px var(--acento); }
+.casilla.resaltada { background: var(--resalte); border-color: var(--resalte-borde); }
+.casilla svg { overflow: visible; }
+.casilla svg.peq { width: 36%; } .casilla svg.med { width: 56%; } .casilla svg.gra { width: 78%; }
+.casilla .num { position: absolute; z-index: 1; top: 1px; left: 2px; font-size: 0.7rem; line-height: 1.2; color: var(--suave); background: var(--tarjeta); border-radius: 3px; padding: 0 2px; }
+.casilla .nom { position: absolute; z-index: 1; bottom: 1px; right: 3px; font: 600 0.75rem ui-monospace, Menlo, Consolas, monospace; background: var(--tarjeta); border: 1px solid var(--borde); border-radius: 4px; padding: 0 3px; }
+.f-rojo { fill: var(--rojo); } .f-verde { fill: var(--verde); } .f-azul { fill: var(--azul); }
+svg .pieza { stroke: var(--trazo); stroke-width: 5; stroke-linejoin: round; }
+.opciones svg .pieza.silueta { fill: none; stroke: currentColor; stroke-width: 9; }
+
+/* Paneles (los campos, mensajes y valores comunes están en base.css) */
+#formula, #formalizacion { flex: 1 1 260px; min-width: 0; }
+#premisas, #conclusion { width: 100%; margin-bottom: 8px; }
+#frases { flex: 1 1 260px; max-width: 100%; }
+
+
+.resultado-principal { font-size: 1.15rem; margin: 10px 0; }
+.asignacion { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; margin: 6px 0; }
+.asignacion select { font-size: 0.95rem; }
+
+/* Árbol de evaluación */
+.arbol-evaluacion, .arbol-evaluacion ul { list-style: none; margin: 0; padding-left: 0; }
+.arbol-evaluacion ul { padding-left: 22px; border-left: 1px dotted var(--borde); margin-left: 9px; }
+.linea-nodo { display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px; padding: 2px 4px; border-radius: 4px; }
+.linea-nodo:hover { background: var(--acento-suave); }
+.linea-nodo.decisivo { box-shadow: inset 3px 0 0 var(--resalte-borde); }
+.desplegar { width: 1.4em; height: 1.4em; padding: 0; border: none; background: transparent; color: var(--acento); cursor: pointer; font-size: 0.9rem; }
+.desplegar:disabled { visibility: hidden; }
+.etq { font-family: var(--f-formula); color: var(--suave); }
+.linea-nodo .fo { font-size: 1.05rem; }
+.porque { color: var(--suave); font-size: 0.85rem; }
+
+/* Argumento */
+table.argumento { border-collapse: collapse; margin: 8px 0; }
+table.argumento td { padding: 3px 10px; border-bottom: 1px solid var(--borde); }
+table.argumento td.fo { font-size: 1.05rem; }
+
+/* Estructura y diccionario */
+.estructura { font-family: var(--f-formula); font-size: 1.02rem; line-height: 1.8; }
+.estructura .linea { overflow-wrap: anywhere; }
+.estructura h4 { font-family: system-ui, sans-serif; font-size: 0.9rem; color: var(--suave); margin: 10px 0 2px; font-weight: 600; }
+.diccionario { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 2px 18px; margin: 8px 0; }
+.diccionario div { font-size: 0.92rem; }
+.diccionario code { font-family: var(--f-formula); font-size: 1rem; }
+
+@media (max-width: 600px) {
+  .tablero { grid-template-columns: repeat(6, 46px); grid-template-rows: repeat(6, 46px); }
+  .casilla { width: 46px; height: 46px; }
+}

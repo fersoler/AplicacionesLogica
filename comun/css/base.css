@@ -1,0 +1,203 @@
+/* SPDX-License-Identifier: GPL-3.0-or-later
+   Copyright (C) 2026 Fernando Soler Toscano */
+/* Estilo común de las aplicaciones de lógica */
+:root {
+  --fondo: #fbfaf7;
+  --tarjeta: #ffffff;
+  --texto: #1f2328;
+  --suave: #5f6670;
+  --borde: #d6d3cc;
+  --acento: #2f5d8a;
+  --acento-suave: #e3ecf5;
+  --error: #b42318;
+  --error-suave: #fdecea;
+  --ok: #1e7d4f;
+  --resalte: #fff1b8;
+  --resalte-borde: #e0b400;
+  --sin: #9aa0a6;
+  --f-formula: "STIX Two Math", "Cambria Math", "Latin Modern Math", "Times New Roman", serif;
+  /* Colores de las filas (origen de cada línea en el colapso) */
+  --o0: #dbe8f5; --o1: #f9e5d7; --o2: #d9ecdf; --o3: #eadff2;
+  --o4: #f6edcc; --o5: #d5edee; --o6: #f6dee4; --o7: #e7e9d7;
+  --olem: #ecebe8;
+  /* Los mismos colores, más intensos, para las franjas y la leyenda */
+  --c0: #6b9fd4; --c1: #e8945a; --c2: #5fb07a; --c3: #a77bc9;
+  --c4: #d9b52c; --c5: #4fb3b8; --c6: #d9748f; --c7: #9aa25a; --clem: #9a968e;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --fondo: #17191c; --tarjeta: #202328; --texto: #e6e6e3; --suave: #a3a8ae;
+    --borde: #3a3e44; --acento: #8cb4dc; --acento-suave: #24313d; --error: #f0857a;
+    --error-suave: #3a2422; --ok: #6cc59a; --resalte: #4a4122; --resalte-borde: #c9a227; --sin: #6b7178;
+    --o0: #324357; --o1: #574032; --o2: #2e483c; --o3: #443954;
+    --o4: #534a24; --o5: #29494e; --o6: #533642; --o7: #404432; --olem: #2b2d30;
+    --c0: #5b8fc4; --c1: #d8844a; --c2: #4fa06a; --c3: #976bb9;
+    --c4: #c9a51c; --c5: #3fa3a8; --c6: #c9647f; --c7: #8a924a; --clem: #8a867e;
+  }
+}
+
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+body {
+  margin: 0; background: var(--fondo); color: var(--texto);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; line-height: 1.5;
+}
+header, main, footer { max-width: 1280px; margin: 0 auto; padding: 0 16px; }
+header { padding-top: 20px; }
+h1 { font-size: 1.6rem; margin: 0.2em 0; }
+h2 { font-size: 1.2rem; margin: 0 0 0.4em; }
+.subtitulo { margin: 0 0 1em; color: var(--suave); }
+footer { color: var(--suave); font-size: 0.85rem; padding: 24px 16px 32px; }
+a { color: var(--acento); }
+
+.bloque {
+  background: var(--tarjeta); border: 1px solid var(--borde); border-radius: 8px;
+  padding: 16px; margin: 0 0 16px;
+}
+.explica { color: var(--suave); margin-top: 0; }
+.desplazable { overflow-x: auto; }
+
+/* Navegación entre aplicaciones */
+.volver { font-size: 0.9rem; }
+.volver a { text-decoration: none; }
+
+/* Entrada */
+label[for="formula"] { font-weight: 600; display: block; margin-bottom: 6px; }
+.fila-entrada { display: flex; gap: 8px; flex-wrap: wrap; }
+#formula {
+  flex: 1 1 320px; font: 1.1rem ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+  padding: 8px 10px; border: 1px solid var(--borde); border-radius: 6px; background: var(--fondo); color: var(--texto);
+}
+button {
+  font: inherit; padding: 7px 14px; border-radius: 6px; border: 1px solid var(--acento);
+  background: var(--acento); color: #fff; cursor: pointer;
+}
+@media (prefers-color-scheme: dark) { button { color: #10161c; } }
+button:disabled { opacity: 0.4; cursor: default; }
+button.secundario, .ejemplos button, .pestanas button, .controles button {
+  background: transparent; color: var(--acento);
+}
+.error { color: var(--error); min-height: 1.4em; margin-top: 6px; }
+.ejemplos { display: flex; flex-wrap: wrap; gap: 6px; margin: 4px 0 8px; }
+.ejemplos button { font-size: 0.9rem; padding: 4px 10px; }
+.ayuda summary { cursor: pointer; color: var(--acento); }
+.simbolos td { padding: 2px 8px; font-family: var(--f-formula); font-size: 1.1rem; }
+.simbolos code, code { font-family: ui-monospace, Menlo, Consolas, monospace; font-size: 0.95em; }
+.tabla-sintaxis { border-collapse: collapse; margin: 4px 0 10px; }
+.tabla-sintaxis th, .tabla-sintaxis td { padding: 2px 14px 2px 0; border-bottom: 1px solid var(--borde); text-align: left; }
+.tabla-sintaxis thead th { font-size: 0.8rem; font-weight: 600; color: var(--suave); }
+.tabla-sintaxis tbody th { font-weight: normal; font-size: 0.92rem; color: var(--suave); }
+[data-ayuda-sintaxis] .fo { white-space: nowrap; }
+.continuar { margin-top: 12px; }
+
+/* Resumen */
+.formula-grande { font-family: var(--f-formula); font-size: 1.4rem; }
+.etiqueta { display: inline-block; padding: 1px 8px; border-radius: 10px; font-size: 0.85rem; background: var(--acento-suave); }
+.etiqueta.tautologia { background: #dff3e8; color: #135c39; }
+.etiqueta.contradiccion { background: var(--error-suave); color: var(--error); }
+@media (prefers-color-scheme: dark) { .etiqueta.tautologia { background: #1d3a2b; color: #8fd6b1; } }
+
+/* Tabla de verdad */
+.tabla-verdad { border-collapse: collapse; font-family: var(--f-formula); font-size: 1.05rem; }
+.tabla-verdad th, .tabla-verdad td { padding: 3px 10px; text-align: center; border-bottom: 1px solid var(--borde); white-space: nowrap; }
+.tabla-verdad th { font-weight: normal; border-bottom: 2px solid var(--texto); }
+.tabla-verdad .sep { border-left: 2px solid var(--texto); }
+.tabla-verdad .principal { font-weight: 700; }
+.tabla-verdad td.n { color: var(--suave); font-family: system-ui, sans-serif; font-size: 0.85rem; }
+.tabla-verdad tbody tr { cursor: pointer; }
+.tabla-verdad tbody tr:hover, .tabla-verdad tbody tr.elegida { background: var(--acento-suave); }
+
+/* Pestañas de las filas */
+.pestanas { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 10px; }
+.pestanas button { font-size: 0.9rem; padding: 3px 10px; }
+.pestanas button[aria-selected="true"] { background: var(--acento); color: #fff; }
+@media (prefers-color-scheme: dark) { .pestanas button[aria-selected="true"] { color: #10161c; } }
+.cabecera-derivacion { font-family: var(--f-formula); font-size: 1.15rem; margin: 6px 0; }
+.casilla { display: block; color: var(--suave); font-size: 0.9rem; margin: 4px 0 8px; }
+.verificada { color: var(--ok); font-size: 0.85rem; font-family: system-ui, sans-serif; margin-left: 8px; }
+.verificada.mal { color: var(--error); }
+
+/* Derivaciones Fitch */
+table.fitch { border-collapse: collapse; font-family: var(--f-formula); font-size: 1.05rem; }
+table.fitch td { padding: 0 8px; vertical-align: middle; white-space: nowrap; }
+table.fitch td.num { text-align: right; color: var(--suave); font-family: system-ui, sans-serif; font-size: 0.85rem; padding-right: 6px; }
+table.fitch td.formula { padding: 0; height: 1px; }
+table.fitch td.formula .barras { height: 100%; } /* barras sin cortes entre filas */
+table.fitch td.just { padding-left: 18px; }
+table.fitch td.nota { padding-left: 18px; color: var(--suave); font-style: italic; font-family: system-ui, sans-serif; font-size: 0.82rem; white-space: normal; min-width: 18ch; }
+.barras { display: flex; align-items: stretch; min-height: 1.75em; }
+.barra { width: 0.95em; border-left: 1.5px solid var(--texto); flex: none; }
+.ultima { display: flex; align-items: center; border-left: 1.5px solid var(--texto); padding-left: 0.45em; }
+.ultima.inicio { margin-top: 5px; }
+.ultima.raya { border-bottom: 1.5px solid var(--texto); }
+.f { padding: 2px 10px 2px 0; }
+.plegado { color: var(--acento); font-family: system-ui, sans-serif; font-size: 0.85rem; }
+tr.plegable, tr.fila-plegada { cursor: pointer; }
+tr.plegable:hover td, tr.fila-plegada:hover td { text-decoration: underline dotted var(--acento); }
+tr.hip-eliminada td.formula .f { font-weight: 700; }
+tr.resaltada td { background: var(--resalte) !important; }
+tr.origen-0 td { background: var(--o0); } tr.origen-1 td { background: var(--o1); }
+tr.origen-2 td { background: var(--o2); } tr.origen-3 td { background: var(--o3); }
+tr.origen-4 td { background: var(--o4); } tr.origen-5 td { background: var(--o5); }
+tr.origen-6 td { background: var(--o6); } tr.origen-7 td { background: var(--o7); }
+tr.origen-lem td, tr.origen-hipotesis td { background: var(--olem); }
+/* Franja del color intenso junto al número, como en la leyenda y en las tarjetas */
+tr.origen-0 td.num { box-shadow: inset 4px 0 var(--c0); } tr.origen-1 td.num { box-shadow: inset 4px 0 var(--c1); }
+tr.origen-2 td.num { box-shadow: inset 4px 0 var(--c2); } tr.origen-3 td.num { box-shadow: inset 4px 0 var(--c3); }
+tr.origen-4 td.num { box-shadow: inset 4px 0 var(--c4); } tr.origen-5 td.num { box-shadow: inset 4px 0 var(--c5); }
+tr.origen-6 td.num { box-shadow: inset 4px 0 var(--c6); } tr.origen-7 td.num { box-shadow: inset 4px 0 var(--c7); }
+tr.origen-lem td.num, tr.origen-hipotesis td.num { box-shadow: inset 4px 0 var(--clem); }
+
+.detalle { margin-top: 14px; border-top: 1px solid var(--borde); padding-top: 12px; }
+.detalle h3 { font-size: 1rem; margin: 0 0 4px; }
+.detalle .botones { display: flex; flex-wrap: wrap; gap: 6px; margin: 6px 0 10px; }
+.detalle .botones button { font-size: 0.85rem; padding: 3px 10px; }
+.leyenda { display: flex; flex-wrap: wrap; gap: 6px 14px; font-size: 0.8rem; color: var(--suave); margin: 4px 0 8px; }
+.leyenda span::before { content: ""; display: inline-block; width: 0.9em; height: 0.9em; border-radius: 3px; margin-right: 4px; vertical-align: -1px; background: var(--c); border: 1px solid var(--b, var(--borde)); border-left-width: 4px; }
+
+/* Paneles con campos, mensajes y valores (mundo, tablas) */
+h3 { font-size: 1rem; margin: 0 0 8px; }
+.rotulo { display: block; font-size: 0.8rem; color: var(--suave); margin: 0 0 3px; }
+.panel input[type="text"], .panel textarea, .panel select {
+  font: 1.05rem ui-monospace, Menlo, Consolas, monospace; padding: 7px 9px; border: 1px solid var(--borde);
+  border-radius: 6px; background: var(--fondo); color: var(--texto);
+}
+.panel select { font-family: inherit; font-size: 0.95rem; max-width: 100%; min-width: 0; }
+.simbolos-botones { display: flex; flex-wrap: wrap; gap: 4px; margin: 4px 0 6px; }
+.simbolos-botones button { font: 1.05rem var(--f-formula); padding: 2px 9px; min-width: 2.2em; background: transparent; color: var(--texto); border-color: var(--borde); }
+.simbolos-botones button:hover { border-color: var(--acento); }
+.frase { font-size: 1.1rem; margin: 8px 0; }
+.mensaje { border-left: 4px solid var(--acento); background: var(--acento-suave); padding: 8px 12px; border-radius: 4px; margin: 10px 0; }
+.mensaje:empty { display: none; }
+.mensaje.mal { border-left-color: var(--error); background: var(--error-suave); }
+.mensaje.bien { border-left-color: var(--ok); }
+.fo { font-family: var(--f-formula); }
+/* Valores de verdad */
+.valor { display: inline-block; min-width: 1.6em; text-align: center; font-weight: 700; border-radius: 4px; padding: 0 5px; font-family: var(--f-formula); }
+.valor.V, .valor.v1 { background: #dff3e8; color: #135c39; }
+.valor.F, .valor.v0 { background: var(--error-suave); color: var(--error); }
+@media (prefers-color-scheme: dark) { .valor.V, .valor.v1 { background: #1d3a2b; color: #8fd6b1; } }
+
+/* Filas de opciones y de botones (tablas, tableaux) */
+.opciones-fila { display: flex; flex-wrap: wrap; gap: 4px 18px; margin: 10px 0; font-size: 0.92rem; }
+.opciones-fila label { cursor: pointer; }
+.botones-fila { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; margin: 8px 0; }
+button.mini { font-size: 0.85rem; padding: 0 8px; line-height: 1.6; }
+button[aria-pressed="true"].secundario { background: var(--acento); color: #fff; }
+@media (prefers-color-scheme: dark) { button[aria-pressed="true"].secundario { color: #10161c; } }
+
+/* Árboles dibujados de arriba abajo (tableaux, árboles de formación): cada segmento es
+   una columna de nodos; las bifurcaciones van en columnas unidas por una barra. */
+.segmento { display: flex; flex-direction: column; align-items: center; }
+.arista { width: 0; height: 0.55em; border-left: 1.5px solid var(--texto); }
+.arista.corta { height: 0.35em; }
+.hijos { display: flex; justify-content: center; align-items: flex-start; }
+.rama-col { position: relative; display: flex; flex-direction: column; align-items: center; padding: 0.8em 0.6em 0; }
+.rama-col::before { content: ""; position: absolute; top: 0; left: 0; right: 0; border-top: 1.5px solid var(--texto); }
+.rama-col:first-child::before { left: 50%; }
+.rama-col:last-child::before { right: 50%; }
+.rama-col::after { content: ""; position: absolute; top: 0; left: 50%; height: 0.8em; border-left: 1.5px solid var(--texto); }
+
+@media (max-width: 600px) {
+  h1 { font-size: 1.3rem; }
+}

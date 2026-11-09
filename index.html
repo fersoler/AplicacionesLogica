@@ -1,0 +1,61 @@
+<!doctype html>
+<!-- SPDX-License-Identifier: GPL-3.0-or-later. Copyright (C) 2026 Fernando Soler Toscano -->
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Aplicaciones de lógica</title>
+  <meta name="description" content="Aplicaciones de apoyo a los Apuntes de Lógica (Grado en Filosofía, Universidad de Sevilla).">
+  <link rel="stylesheet" href="comun/css/base.css">
+  <style>
+    .aplicaciones { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 16px; }
+    .aplicacion { display: block; text-decoration: none; color: var(--texto); margin: 0; }
+    .aplicacion:hover { border-color: var(--acento); }
+    .aplicacion h2 { color: var(--acento); }
+    .aplicacion .tema { font-size: 0.85rem; color: var(--suave); margin: 0 0 6px; }
+    .aplicacion p { margin: 0 0 6px; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Aplicaciones de lógica</h1>
+    <p class="subtitulo">Material de apoyo a los <i>Apuntes de Lógica</i>. Usan la notación del libro, que también se puede escribir con el teclado: <code>~</code>, <code>&amp;</code>, <code>|</code>, <code>-&gt;</code>, <code>&lt;-&gt;</code>, <code>Ax</code>, <code>Ex</code>.</p>
+  </header>
+
+  <main>
+    <div class="aplicaciones">
+      <a class="bloque aplicacion" href="sintaxis/index.html">
+        <p class="tema">Temas 1 y 4. Sintaxis</p>
+        <h2>Sintaxis de las fórmulas</h2>
+        <p>Conectiva principal, subfórmulas, árbol de formación y precedencia; alcance de los cuantificadores, variables libres y ligadas, y sustitución. Para explorar y practicar.</p>
+      </a>
+      <a class="bloque aplicacion" href="deduccion/index.html">
+        <p class="tema">Temas 1 y 4. Deducción natural</p>
+        <h2>Deducción natural</h2>
+        <p>Construye derivaciones con las reglas del libro, proposicionales y de primer orden. Cada línea se comprueba mientras escribes; exporta a LaTeX.</p>
+      </a>
+      <a class="bloque aplicacion" href="tablas/index.html">
+        <p class="tema">Tema 2. Semántica de la lógica proposicional</p>
+        <h2>Tablas de verdad</h2>
+        <p>Tablas de verdad para rellenar, clasificación de fórmulas, equivalencia, consecuencia lógica con contraejemplos y asignación directa, evaluación paso a paso y formalización.</p>
+      </a>
+      <a class="bloque aplicacion" href="kalmar/index.html">
+        <p class="tema">Tema 3. Metalógica proposicional</p>
+        <h2>La prueba de Kalmár, paso a paso</h2>
+        <p>De la tabla de verdad de una fórmula a una derivación: la derivación de cada fila según el lema de Kalmár y el colapso de las premisas con LEM.</p>
+      </a>
+      <a class="bloque aplicacion" href="mundo/index.html">
+        <p class="tema">Tema 5. Semántica de la lógica de primer orden</p>
+        <h2>El mundo de Tarski</h2>
+        <p>Un mundo de piezas como estructura ⟨D, I⟩: evaluación de fórmulas con la definición de satisfacción, contramodelos y formalización.</p>
+      </a>
+      <a class="bloque aplicacion" href="tableaux/index.html">
+        <p class="tema">Tema 6. El cálculo de tableaux</p>
+        <h2>Tableaux semánticos</h2>
+        <p>Árboles con las reglas α, β, γ y δ del libro, paso a paso o construidos por el alumno, con las ramas abiertas y el contramodelo que dan; exporta a texto y a LaTeX.</p>
+      </a>
+    </div>
+  </main>
+
+</body>
+</html>
