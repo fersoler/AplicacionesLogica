@@ -1,6 +1,6 @@
 # Tablas de verdad
 
-Apoyo al tema 2 de los *Apuntes de Lógica* (semántica de la lógica proposicional). Es una versión nueva de [TruthTables](https://fersoler.github.io/TruthTables/), del autor.
+Apoyo al tema 2 de los *Apuntes de Lógica* (semántica de la lógica proposicional). 
 
 ## Qué se puede hacer
 
@@ -31,21 +31,11 @@ Apoyo al tema 2 de los *Apuntes de Lógica* (semántica de la lógica proposicio
 - **Conectivas.** Valen los símbolos del libro o sus equivalentes de teclado:
   - ¬ (`~`), ∧ (`&`), ∨ (`|`);
   - → (`->`), ↔ (`<->`), ⊥ (`#`).
-- **Variables.** Son letras sueltas. La v también es una variable: si alguien escribe `p v q`, como en TruthTables, la aplicación le avisa de que la disyunción es ∨ o `|`.
+- **Variables.** Son letras sueltas. La v también es una variable: si alguien escribe `p v q`, la aplicación le avisa de que la disyunción es ∨ o `|`.
 - **Agrupación.** La precedencia, de más a menos fuerte, es ¬, ∧, ∨, →, ↔ (§1.1.1). Las conectivas binarias se agrupan por la derecha.
 - **Paréntesis.** Las fórmulas se muestran con paréntesis en todo miembro binario de una conectiva binaria, como en las tablas del tema 2: `(p ∨ q) → (p ∧ q)`. Así se ve cómo se ha agrupado lo que se escribió.
 - **Orden de las filas.** Es el del libro: la primera variable cambia más despacio, y cada una toma primero el valor 1.
 - **Tamaño.** Como mucho, 6 variables (64 filas).
-
-## Diferencias con TruthTables
-
-- **Sintaxis.** Hay bicondicional y ⊥, y se usan la precedencia y la agrupación del libro.
-- **Relleno.** Las casillas se rellenan con pulsaciones o con columnas enteras, no escribiendo en cada hueco.
-- **Contenido.** Añade clasificación, satisfacibilidad, equivalencia, consecuencia, asignación directa, evaluación paso a paso y formalización.
-- **Seguridad.** No carga nada de fuera: ni MathJax ni el *polyfill* de `polyfill.io`, un dominio que en 2024 cambió de dueño y pasó a servir código malicioso. La página publicada de TruthTables sigue cargándolo, así que conviene borrar esta línea de su `index.html`:
-  ```html
-  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
-  ```
 
 ## Ficheros
 
