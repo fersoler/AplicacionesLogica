@@ -62,9 +62,9 @@ Los ejemplos, retos, frases y ejercicios de cada aplicación están en su carpet
 
 - **Autor:** Fernando Soler Toscano.
 - **Fuentes:**
-  - [TruthTables](https://fersoler.github.io/TruthTables/), del mismo autor: la representación de las fórmulas, la impresión con paréntesis mínimos y la idea de rellenar la tabla, que `tablas/` amplía;
-  - la aplicación `mundoLogica2.html`, del mismo autor, que es la versión anterior de `mundo/`;
-  - el cuaderno de tableaux en Python del mismo autor (proyecto [LogiCoLab](https://github.com/fersoler/LogiCoLab), publicado con licencia MIT), del que `tableaux/` toma el diseño del motor y la regla δ de Boolos;
+  - [TruthTables](https://fersoler.github.io/TruthTables/): la representación de las fórmulas, la impresión con paréntesis mínimos y la idea de rellenar la tabla, que `tablas/` amplía;
+  - la aplicación `mundoLogica2.html`, que es la versión anterior de `mundo/`;
+  - el cuaderno de tableaux en Python (proyecto [LogiCoLab](https://github.com/fersoler/LogiCoLab), publicado con licencia MIT), del que `tableaux/` toma el diseño del motor y la regla δ de Boolos;
   - el asistente [ndprover.org](https://ndprover.org/), que sirvió de modelo a `deduccion/` (derivaciones Fitch comprobadas línea a línea) y del que proceden las alternativas de teclado (`~`, `&`, `|`, `->`, `Ax`…).
 
 ## Licencia
