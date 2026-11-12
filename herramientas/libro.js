@@ -12,7 +12,7 @@ const fs = require('fs');
 const path = require('path');
 const PO = require('../comun/js/primerorden.js');
 
-const FICHEROS = ['cap1_teoria.tex', 'cap1_ejercicios.tex', 'cap3_metalociga.tex', 'cap4_teoria.tex', 'cap4_ejercicios.tex', 'apendice_soluciones.tex', 'apendice_resumen_reglas.tex'];
+const FICHEROS = ['capitulos/cap1_teoria.tex', 'capitulos/cap1_ejercicios.tex', 'capitulos/cap3_metalociga.tex', 'capitulos/cap4_teoria.tex', 'capitulos/cap4_ejercicios.tex', 'capitulos/apendice_soluciones.tex', 'capitulos/apendice_resumen_reglas.tex'];
 
 // Macros de reglas de fitch.sty y de \myrules del preámbulo del libro.
 const MACROS = {

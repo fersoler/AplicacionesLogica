@@ -13,7 +13,7 @@ const L = require('./libro.js');
 
 const RUTA = L.rutaLibro();
 const SALIDA = path.resolve(__dirname, '../deduccion/datos/ejercicios.js');
-const FICHEROS = [['cap1_ejercicios.tex', 1], ['cap4_ejercicios.tex', 4]];
+const FICHEROS = [['capitulos/cap1_ejercicios.tex', 1], ['capitulos/cap4_ejercicios.tex', 4]];
 
 // Etiquetas del .aux (números de ejercicios y de secciones) y títulos de los temas.
 function leerAux() {
