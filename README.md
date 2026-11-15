@@ -67,6 +67,10 @@ Los ejemplos, retos, frases y ejercicios de cada aplicación están en su carpet
   - el cuaderno de tableaux en Python (proyecto [LogiCoLab](https://github.com/fersoler/LogiCoLab), publicado con licencia MIT), del que `tableaux/` toma el diseño del motor y la regla δ de Boolos;
   - el asistente [ndprover.org](https://ndprover.org/), que sirvió de modelo a `deduccion/` (derivaciones Fitch comprobadas línea a línea) y del que proceden las alternativas de teclado (`~`, `&`, `|`, `->`, `Ax`…).
 
+## Uso de herramientas de IA generativa
+
+Estas aplicaciones se han desarrollado con la ayuda de Claude Code (Anthropic): su programación, las pruebas automáticas, la documentación y parte de los ejemplos y ejercicios. El autor ha dirigido y revisado el trabajo y es responsable del resultado.
+
 ## Licencia
 
 - **Código:** GNU General Public License, versión 3 o posterior (`LICENSE`). Cada fichero lleva su aviso `SPDX-License-Identifier: GPL-3.0-or-later`.
