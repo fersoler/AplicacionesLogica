@@ -24,7 +24,7 @@ Este repositorio reúne aplicaciones de apoyo a los *Apuntes de Lógica* (2.º d
   - la ayuda sobre cómo escribir las fórmulas sale de `comun/js/ayuda.js`, con la misma tabla (símbolo, libro, teclado) y las mismas frases; cada página indica solo qué admite;
   - la ayuda va siempre en un bloque desplegable al final de la página;
   - los botones de símbolos siguen el mismo orden: ¬ ∧ ∨ → ↔ ⊥ ∀ ∃ = ≠ ( ), con los que admita cada aplicación;
-  - el subtítulo de cada página dice el tema del libro: «Semántica de la lógica proposicional (tema 2): …».
+  - el subtítulo de cada página indica el tema correspondiente del libro: «Semántica de la lógica proposicional (tema 2): …».
 
 ## Estructura
 
